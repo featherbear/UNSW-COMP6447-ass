@@ -1,0 +1,23 @@
+FILE_PATH = "./tests/"
+
+######################
+
+"""
+Find test programs
+"""
+import re, os
+fileFilter = re.compile("[^\.]*$")
+files = filter(lambda name: fileFilter.match(os.path.basename(name)), os.listdir(FILE_PATH))
+
+# results = dict()
+
+"""
+Detect input format through some heuristics
+"""
+import securitears
+
+for file in files:
+    filepath = os.path.join(FILE_PATH, file)
+    bootstrap = securitears.detectFormat(filepath)
+    with bootstrap(filepath) as w:
+        print(w)
