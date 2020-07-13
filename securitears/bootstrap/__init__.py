@@ -53,7 +53,7 @@ class BaseBootstrap:
     def parse(self):
         raise NotImplementedError()
         
-    def fuzz(self):
+    def fuzz(self, *, limit=500):
         #                         TODO: INPUT DATA - Parse???
         active = dict((p[0], p[1](             )) for p in strategy.items())
         counts = dict((p[0], 0) for p in strategy.items())
@@ -62,10 +62,13 @@ class BaseBootstrap:
             for strat in [*active.keys()]:
                 try:
                     data = next(active[strat])
+                    if counts[strat] == limit:
+                        raise StopIteration
+                    counts[strat] += 1
                 except StopIteration:
                     del active[strat]
                     continue
-                counts[strat] += 1
+                
                 if self.testRaw(data):
                     return data
                     # active.clear()
