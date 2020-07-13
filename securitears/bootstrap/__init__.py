@@ -24,10 +24,14 @@ from ..Harness import Harness
 from .. import strategy
 
 class BaseBootstrap: 
-    def __init__(self, filePath):
+    def __init__(self, filePath, *, inputData=None):
         if not os.path.isfile(filePath):
             raise FileNotFoundError(f"{filePath} does not exist")
+        if inputData is not None and not os.path.isfile(inputData):
+            raise FileNotFoundError(f"{inputData} does not exist")
+
         self.filePath = filePath
+        self.inputData = inputData
         self.harness = Harness(filePath)
     
     def __repr__(self):
