@@ -24,7 +24,11 @@ if __name__ == "__main__":
         from . import bootstrap
         bootstrap = bootstrap[args.type]
 
-    print(f"Selected {bootstrap} for {args.program}")
-
     with bootstrap(args.program) as w:
-        w.fuzz()
+        print(w)
+        fuzzString = w.fuzz()
+        if fuzzString:
+            print("Found a payload:")
+            print(fuzzString) 
+        else:
+            print("No payload found")

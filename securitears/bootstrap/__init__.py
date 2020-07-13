@@ -67,11 +67,15 @@ class BaseBootstrap:
                     continue
                 counts[strat] += 1
                 if self.testRaw(data):
-                    active.clear()
-                    break
-            
+                    return data
+                    # active.clear()
+                    # break
+        '''
         import json
         print(json.dumps(counts, indent=4))
+        '''
+
+        return False
     
     @staticmethod
     def detect(filename):

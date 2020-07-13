@@ -20,4 +20,4 @@ for file in files:
     filePath = os.path.join(FILE_PATH, file)
     bootstrap = securitears.detectFormat(filePath)
     with bootstrap(filePath) as w:
-        w.fuzz()
+        print(w, w.fuzz() or "No payload found")
