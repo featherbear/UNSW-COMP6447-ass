@@ -2,6 +2,7 @@
 
 from . import BaseBootstrap
 from .. import util
+from ..Harness import Harness
 
 class Bootstrap(BaseBootstrap):
     def __repr__(self):
@@ -9,4 +10,5 @@ class Bootstrap(BaseBootstrap):
 
     @staticmethod
     def detect(filename):
+        # harness = Harness(filename)
         return util.strings(filename, split=False).lower().count("csv")
