@@ -6,10 +6,10 @@
 """
 Select bootstrap with highest score
 """
-def detectFormat(filepath):
-    if not os.path.isfile(filepath):
-        raise FileNotFoundError(f"{filepath} does not exist")
-    results = [(bootstrap, bootstrap.detect(filepath)) for bootstrap in __modules.values()]
+def detectFormat(filePath):
+    if not os.path.isfile(filePath):
+        raise FileNotFoundError(f"{filePath} does not exist")
+    results = [(bootstrap, bootstrap.detect(filePath)) for bootstrap in __modules.values()]
     return sorted(results, key=lambda p: p[1])[-1][0]
 
 
@@ -21,16 +21,17 @@ Inherit this class to create a new bootstrap
 """
 import os
 from ..Harness import Harness
-class BaseBootstrap(): 
-    def __init__(self, filepath):
-        if not os.path.isfile(filepath):
-            raise FileNotFoundError(f"{filepath} does not exist")
+from .. import strategy
 
-        self.filepath = filepath
-        self.harness = Harness(filepath)
+class BaseBootstrap: 
+    def __init__(self, filePath):
+        if not os.path.isfile(filePath):
+            raise FileNotFoundError(f"{filePath} does not exist")
+        self.filePath = filePath
+        self.harness = Harness(filePath)
     
     def __repr__(self):
-        return f"Bootstrap :: {self.filepath}"
+        return f"Bootstrap :: {self.filePath}"
 
     def __enter__(self): 
         return self
