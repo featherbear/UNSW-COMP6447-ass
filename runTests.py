@@ -17,7 +17,7 @@ Detect input format through some heuristics
 import securitears
 
 for file in files:
-    filepath = os.path.join(FILE_PATH, file)
-    bootstrap = securitears.detectFormat(filepath)
-    with bootstrap(filepath) as w:
-        print(w)
+    filePath = os.path.join(FILE_PATH, file)
+    bootstrap = securitears.detectFormat(filePath)
+    with bootstrap(filePath) as w:
+        w.fuzz()

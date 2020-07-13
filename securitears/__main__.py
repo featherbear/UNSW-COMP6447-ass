@@ -27,4 +27,4 @@ if __name__ == "__main__":
     print(f"Selected {bootstrap} for {args.program}")
 
     with bootstrap(args.program) as w:
-        print(w)
+        w.fuzz()

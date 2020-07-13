@@ -6,10 +6,10 @@
 """
 Select bootstrap with highest score
 """
-def detectFormat(filepath):
-    if not os.path.isfile(filepath):
-        raise FileNotFoundError(f"{filepath} does not exist")
-    results = [(bootstrap, bootstrap.detect(filepath)) for bootstrap in __modules.values()]
+def detectFormat(filePath):
+    if not os.path.isfile(filePath):
+        raise FileNotFoundError(f"{filePath} does not exist")
+    results = [(bootstrap, bootstrap.detect(filePath)) for bootstrap in __modules.values()]
     return sorted(results, key=lambda p: p[1])[-1][0]
 
 
@@ -21,16 +21,21 @@ Inherit this class to create a new bootstrap
 """
 import os
 from ..Harness import Harness
-class BaseBootstrap(): 
-    def __init__(self, filepath):
-        if not os.path.isfile(filepath):
-            raise FileNotFoundError(f"{filepath} does not exist")
+from .. import strategy
 
-        self.filepath = filepath
-        self.harness = Harness(filepath)
+class BaseBootstrap: 
+    def __init__(self, filePath, *, inputData=None):
+        if not os.path.isfile(filePath):
+            raise FileNotFoundError(f"{filePath} does not exist")
+        if inputData is not None and not os.path.isfile(inputData):
+            raise FileNotFoundError(f"{inputData} does not exist")
+
+        self.filePath = filePath
+        self.inputData = inputData
+        self.harness = Harness(filePath)
     
     def __repr__(self):
-        return f"Bootstrap :: {self.filepath}"
+        return f"Bootstrap :: {self.filePath}"
 
     def __enter__(self): 
         return self
@@ -38,6 +43,36 @@ class BaseBootstrap():
     def __exit__(self, *_): 
         pass
 
+    def test(self, data):
+        raise NotImplementedError()
+        self.testRaw(data)
+
+    def testRaw(self, data):
+        return self.harness.test(data)
+
+    def parse(self):
+        raise NotImplementedError()
+        
+    def fuzz(self):
+        #                         TODO: INPUT DATA - Parse???
+        active = dict((p[0], p[1](             )) for p in strategy.items())
+        counts = dict((p[0], 0) for p in strategy.items())
+
+        while len(active) > 0:
+            for strat in [*active.keys()]:
+                try:
+                    data = next(active[strat])
+                except StopIteration:
+                    del active[strat]
+                    continue
+                counts[strat] += 1
+                if self.testRaw(data):
+                    active.clear()
+                    break
+            
+        import json
+        print(json.dumps(counts, indent=4))
+    
     @staticmethod
     def detect(filename):
         # raise NotImplementedError()
