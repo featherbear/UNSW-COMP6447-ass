@@ -9,3 +9,7 @@ class Bootstrap(BaseBootstrap):
     @staticmethod
     def detect(filename):
         return 1
+
+    @classmethod
+    def getStrategies(cls):
+        return cls.strategy["plain"]

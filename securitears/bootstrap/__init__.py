@@ -21,11 +21,12 @@ Inherit this class to create a new bootstrap
 """
 import os.path
 from ..Harness import Harness
-from .. import csv_strategy, json_strategy, plaintext_strategy, xml_strategy, state
+from .. import state
 import enlighten
-from ..strategy import Strategy
 
 class BaseBootstrap: 
+    from .. import strategy
+
     def __init__(self, filePath, *, inputFile=None):
         if not os.path.isfile(filePath):
             raise FileNotFoundError(f"{filePath} does not exist")
@@ -57,18 +58,18 @@ class BaseBootstrap:
 
     def parse(self):
         raise NotImplementedError()
-        
+
+    @classmethod
+    def getStrategies(cls):
+        raise NotImplementedError()
+        return cls.strategy["common"]
+
     def fuzz(self, *, limit=None):
         if type(limit) is int and limit <= 0:
             limit = None
 
-        strategy_name = os.path.basename(self.filePath)[:-1]+"_strategy"
-
-        # strategy = importlib.import_module(os.path.basename(self.filePath)[:-1]+"_strategy")
-
-
+        strategy = self.getStrategies()
         active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
-        strategyObj = Strategy(strategy_name, )
 
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
         manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
@@ -78,7 +79,7 @@ class BaseBootstrap:
         counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations', color='grey')) for p in strategy.items())
 
         while len(active) > 0:
-            for strat in [*strategyObj.get_modules().keys()]:
+            for strat in [*strategy.keys()]:
                 try:
                     data = next(active[strat])
                     if counters[strat].count == limit:
