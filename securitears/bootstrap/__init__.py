@@ -25,14 +25,17 @@ from .. import strategy, state
 import enlighten
 
 class BaseBootstrap: 
-    def __init__(self, filePath, *, inputData=None):
+    def __init__(self, filePath, *, inputFile=None):
         if not os.path.isfile(filePath):
             raise FileNotFoundError(f"{filePath} does not exist")
-        if inputData is not None and not os.path.isfile(inputData):
-            raise FileNotFoundError(f"{inputData} does not exist")
+
+        if type(inputFile) is str:
+            if not os.path.isfile(inputFile):
+                raise FileNotFoundError(f"{inputFile} does not exist")           
+            inputFile = open(inputFile)
 
         self.filePath = filePath
-        self.inputData = inputData
+        self.inputData = inputFile.read() if inputFile else None
         self.harness = Harness(filePath)
     
     def __repr__(self):
@@ -57,8 +60,8 @@ class BaseBootstrap:
     def fuzz(self, *, limit=None):
         if type(limit) is int and limit <= 0:
             limit = None
-        #                         TODO: INPUT DATA - Parse???
-        active = dict((p[0], p[1](             )) for p in strategy.items())
+
+        active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
         manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
                            color='bold_underline_bright_white_on_lightslategray',
