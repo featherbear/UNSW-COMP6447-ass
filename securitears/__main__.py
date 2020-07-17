@@ -28,7 +28,7 @@ if __name__ == "__main__":
     from . import state
     state["verbose"] = args.verbose
 
-    with bootstrap(args.program) as w:
+    with bootstrap(args.program, inputFile=args.input) as w:
         print(w)
         fuzzString = w.fuzz(limit=args.limit)
         if fuzzString is not None:
