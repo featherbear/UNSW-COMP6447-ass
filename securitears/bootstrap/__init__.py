@@ -21,7 +21,7 @@ Inherit this class to create a new bootstrap
 """
 import os.path
 from ..Harness import Harness
-from .. import strategy, state
+from .. import csv_strategy, json_strategy, plaintext_strategy, xml_strategy, state
 import enlighten
 
 class BaseBootstrap: 
@@ -60,6 +60,8 @@ class BaseBootstrap:
     def fuzz(self, *, limit=None):
         if type(limit) is int and limit <= 0:
             limit = None
+
+        strategy = os.path.basename(self.filePath)[:-1]+"_strategy"
 
         active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
