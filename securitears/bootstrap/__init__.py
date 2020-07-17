@@ -53,7 +53,9 @@ class BaseBootstrap:
     def parse(self):
         raise NotImplementedError()
         
-    def fuzz(self, *, limit=500):
+    def fuzz(self, *, limit=None):
+        if type(limit) is int and limit <= 0:
+            limit = None
         #                         TODO: INPUT DATA - Parse???
         active = dict((p[0], p[1](             )) for p in strategy.items())
         counts = dict((p[0], 0) for p in strategy.items())
