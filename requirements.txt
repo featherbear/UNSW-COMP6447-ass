@@ -1,0 +1,2 @@
+blessed==1.17.8
+enlighten==1.6.0
