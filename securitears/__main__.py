@@ -32,7 +32,6 @@ if __name__ == "__main__":
         print(w)
         fuzzString = w.fuzz(limit=args.limit)
         if fuzzString is not None:
-            print("Found a payload:")
-            print(fuzzString) 
+            print("Found a payload!")
         else:
             print("No payload found")

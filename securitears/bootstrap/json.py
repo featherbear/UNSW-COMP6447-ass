@@ -12,3 +12,7 @@ class Bootstrap(BaseBootstrap):
     def detect(filename):
         # harness = Harness(filename)
         return util.strings(filename, split=False).lower().count("json")
+
+    @classmethod
+    def getStrategies(cls):
+        return dict(**super().getStrategies(), **cls.strategy["json"])
