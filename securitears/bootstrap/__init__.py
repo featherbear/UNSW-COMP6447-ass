@@ -62,13 +62,13 @@ class BaseBootstrap:
         if type(limit) is int and limit <= 0:
             limit = None
 
-        strategy = os.path.basename(self.filePath)[:-1]+"_strategy"
+        strategy_name = os.path.basename(self.filePath)[:-1]+"_strategy"
 
         # strategy = importlib.import_module(os.path.basename(self.filePath)[:-1]+"_strategy")
 
 
         active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
-        strategyObj = Strategy(strategy, active)
+        strategyObj = Strategy(strategy_name, )
 
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
         manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
