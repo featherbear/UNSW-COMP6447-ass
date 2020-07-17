@@ -19,9 +19,10 @@ def detectFormat(filePath):
 Bootstrap base class.  
 Inherit this class to create a new bootstrap
 """
-import os
+import os.path
 from ..Harness import Harness
-from .. import strategy
+from .. import strategy, state
+import enlighten
 
 class BaseBootstrap: 
     def __init__(self, filePath, *, inputData=None):
@@ -56,28 +57,32 @@ class BaseBootstrap:
     def fuzz(self, *, limit=500):
         #                         TODO: INPUT DATA - Parse???
         active = dict((p[0], p[1](             )) for p in strategy.items())
-        counts = dict((p[0], 0) for p in strategy.items())
+        manager = enlighten.get_manager(enabled=state.get("verbose", False))
+        manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
+                           color='bold_underline_bright_white_on_lightslategray',
+                           justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
+                          )
+        counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations')) for p in strategy.items())
 
         while len(active) > 0:
             for strat in [*active.keys()]:
                 try:
                     data = next(active[strat])
-                    if counts[strat] == limit:
+                    if counters[strat].count == limit:
                         raise StopIteration
-                    counts[strat] += 1
                 except StopIteration:
                     del active[strat]
+                    counters[strat].total = counters[strat].count
+                    counters[strat].close()
                     continue
                 
-                if self.testRaw(data):
-                    return data
-                    # active.clear()
-                    # break
-        '''
-        import json
-        print(json.dumps(counts, indent=4))
-        '''
+                counters[strat].update()
 
+                if self.testRaw(data):
+                    manager.stop()
+                    return data
+
+        manager.stop()
         return False
     
     @staticmethod

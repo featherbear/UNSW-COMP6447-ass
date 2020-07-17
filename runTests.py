@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 FILE_PATH = "./tests/"
 
 ######################
@@ -16,8 +18,11 @@ Detect input format through some heuristics
 """
 import securitears
 
+securitears.state.update(dict(verbose=True))
+
 for file in files:
     filePath = os.path.join(FILE_PATH, file)
     bootstrap = securitears.detectFormat(filePath)
     with bootstrap(filePath) as w:
-        print(w, w.fuzz() or "No payload found")
+        print(w, end=" ")
+        print(w.fuzz() or "No payload found", flush=True)
