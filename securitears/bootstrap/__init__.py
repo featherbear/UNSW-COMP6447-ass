@@ -64,13 +64,14 @@ class BaseBootstrap:
                            color='bold_underline_bright_white_on_lightslategray',
                            justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
                           )
-        counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations')) for p in strategy.items())
+        counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations', color='grey')) for p in strategy.items())
 
         while len(active) > 0:
             for strat in [*active.keys()]:
                 try:
                     data = next(active[strat])
                     if counters[strat].count == limit:
+                        counters[strat].color = "bright_black"
                         raise StopIteration
                 except StopIteration:
                     del active[strat]
@@ -81,11 +82,17 @@ class BaseBootstrap:
                 counters[strat].update()
 
                 if self.testRaw(data):
+                    counters[strat].color = "green"
+                    counters[strat].total = counters[strat].count
+                    counters[strat].close()
+                    for c in counters.values(): c.close()
                     manager.stop()
                     return data
 
+        for c in counters.values(): c.close()
         manager.stop()
-        return False
+        
+        return None
     
     @staticmethod
     def detect(filename):
