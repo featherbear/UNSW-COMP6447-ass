@@ -23,6 +23,7 @@ import os.path
 from ..Harness import Harness
 from .. import csv_strategy, json_strategy, plaintext_strategy, xml_strategy, state
 import enlighten
+from ..strategy import Strategy
 
 class BaseBootstrap: 
     def __init__(self, filePath, *, inputFile=None):
@@ -63,7 +64,12 @@ class BaseBootstrap:
 
         strategy = os.path.basename(self.filePath)[:-1]+"_strategy"
 
+        # strategy = importlib.import_module(os.path.basename(self.filePath)[:-1]+"_strategy")
+
+
         active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
+        strategyObj = Strategy(strategy, active)
+
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
         manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
                            color='bold_underline_bright_white_on_lightslategray',
@@ -72,7 +78,7 @@ class BaseBootstrap:
         counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations', color='grey')) for p in strategy.items())
 
         while len(active) > 0:
-            for strat in [*active.keys()]:
+            for strat in [*strategyObj.get_modules().keys()]:
                 try:
                     data = next(active[strat])
                     if counters[strat].count == limit:
