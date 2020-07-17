@@ -31,7 +31,7 @@ if __name__ == "__main__":
     with bootstrap(args.program) as w:
         print(w)
         fuzzString = w.fuzz(limit=args.limit)
-        if fuzzString:
+        if fuzzString is not None:
             print("Found a payload:")
             print(fuzzString) 
         else:
