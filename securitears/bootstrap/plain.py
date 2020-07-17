@@ -12,4 +12,4 @@ class Bootstrap(BaseBootstrap):
 
     @classmethod
     def getStrategies(cls):
-        return cls.strategy["plain"]
+        return dict(**super().getStrategies(), **cls.strategy["plain"])

@@ -15,4 +15,4 @@ class Bootstrap(BaseBootstrap):
 
     @classmethod
     def getStrategies(cls):
-        return cls.strategy["json"]
+        return dict(**super().getStrategies(), **cls.strategy["json"])
