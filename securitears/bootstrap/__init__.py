@@ -61,7 +61,6 @@ class BaseBootstrap:
 
     @classmethod
     def getStrategies(cls):
-        raise NotImplementedError()
         return cls.strategy["common"]
 
     def fuzz(self, *, limit=None):
@@ -72,14 +71,14 @@ class BaseBootstrap:
         active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
 
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
-        manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
+        manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}' + str(self) +'{fill}{elapsed}',
                            color='bold_underline_bright_white_on_lightslategray',
                            justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
                           )
         counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations', color='grey')) for p in strategy.items())
 
         while len(active) > 0:
-            for strat in [*strategy.keys()]:
+            for strat in [*active.keys()]:
                 try:
                     data = next(active[strat])
                     if counters[strat].count == limit:
