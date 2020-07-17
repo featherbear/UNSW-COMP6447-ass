@@ -27,4 +27,4 @@ class Harness:
                               stdin=subprocess.PIPE,
                               stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE) as p:
-            return *p.communicate(data.encode()), p.returncode
+            return (*p.communicate(data.encode()), p.returncode)
