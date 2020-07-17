@@ -1,10 +1,4 @@
-# Strategies are the different fuzzing techniques that will be used
 
-###################################################################
-
-"""
-Dynamically load the strategies for CSV
-"""
 def __init__():
     import importlib
     import pkgutil
@@ -19,4 +13,3 @@ def __init__():
 
 __modules = {}
 __init__()
-
