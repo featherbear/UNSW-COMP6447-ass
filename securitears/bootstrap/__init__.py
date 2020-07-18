@@ -21,18 +21,23 @@ Inherit this class to create a new bootstrap
 """
 import os.path
 from ..Harness import Harness
-from .. import strategy, state
+from .. import state
 import enlighten
 
 class BaseBootstrap: 
-    def __init__(self, filePath, *, inputData=None):
+    from .. import strategy
+
+    def __init__(self, filePath, *, inputFile=None):
         if not os.path.isfile(filePath):
             raise FileNotFoundError(f"{filePath} does not exist")
-        if inputData is not None and not os.path.isfile(inputData):
-            raise FileNotFoundError(f"{inputData} does not exist")
+
+        if type(inputFile) is str:
+            if not os.path.isfile(inputFile):
+                raise FileNotFoundError(f"{inputFile} does not exist")           
+            inputFile = open(inputFile)
 
         self.filePath = filePath
-        self.inputData = inputData
+        self.inputData = inputFile.read() if inputFile else None
         self.harness = Harness(filePath)
     
     def __repr__(self):
@@ -53,12 +58,20 @@ class BaseBootstrap:
 
     def parse(self):
         raise NotImplementedError()
-        
-    def fuzz(self, *, limit=500):
-        #                         TODO: INPUT DATA - Parse???
-        active = dict((p[0], p[1](             )) for p in strategy.items())
+
+    @classmethod
+    def getStrategies(cls):
+        return cls.strategy["common"]
+
+    def fuzz(self, *, limit=None):
+        if type(limit) is int and limit <= 0:
+            limit = None
+
+        strategy = self.getStrategies()
+        active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
+
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
-        manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
+        manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}' + str(self) +'{fill}{elapsed}',
                            color='bold_underline_bright_white_on_lightslategray',
                            justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
                           )
