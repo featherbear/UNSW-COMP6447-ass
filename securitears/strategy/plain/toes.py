@@ -1,2 +1,2 @@
 def strategy(data=None):
-    yield "plaintexttoes"
+    yield "toestoestoes"
