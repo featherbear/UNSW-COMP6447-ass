@@ -15,6 +15,7 @@ if __name__ == "__main__":
     parser.add_argument('--type', '-t', choices=('json', 'csv', 'xml', 'plain'), help='fuzz input type')
     parser.add_argument('--dest', '-d', metavar="dest", type=argparse.FileType('w'), help='destination crash data')
     parser.add_argument('--limit', '-l', type=int, metavar="limit", default=500, help='execution limit per strategy (default: 500)')
+    parser.add_argument('--wait', '-w', action="store_true", help='wait for all strategies to finish')
     parser.add_argument('--verbose', '-v', action="store_true", help='verbose')
 
     if len(sys.argv) == 1:
@@ -38,7 +39,7 @@ if __name__ == "__main__":
     state["verbose"] = args.verbose
 
     with bootstrap(args.program, inputFile=args.input) as w:
-        fuzzString = w.fuzz(limit=args.limit)
+        fuzzString = w.fuzz(limit=args.limit, wait=args.wait)
         if fuzzString is not None:
             print("\nFound a payload!")
             if args.dest:
