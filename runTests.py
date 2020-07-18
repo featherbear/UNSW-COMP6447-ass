@@ -1,14 +1,17 @@
 #!/usr/bin/python3
 
 FILE_PATH = "./tests/"
-LIMIT = 2000
+LIMIT = 500
 
 ######################
 
 from blessed import Terminal
 term = Terminal()
-
 print(term.home + term.clear)
+
+# ./runTests <limit>
+try: import sys; LIMIT = int(sys.argv[1])
+except: pass
 
 """
 Find test programs
