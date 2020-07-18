@@ -28,7 +28,7 @@ Fuzzer
 import securitears
 securitears.state.update(dict(verbose=VERBOSE))
 
-results = {}
+results = dict()
 
 for file in files:
     filePath = os.path.join(FILE_PATH, file)
@@ -39,16 +39,20 @@ for file in files:
 
     with bootstrap(filePath, inputFile=inputFile) as w:
         result = w.fuzz(limit=LIMIT, wait=WAIT)
-        print("\n" + (f"Payload: FOUND" if result is not None else "No payload found"), flush=True)
+        if result is not None:
+            with open(filePath + ".bad.txt", "wb") as f:
+                f.write(securitears.util.strToBytes(result))
+            print("\nPayload: FOUND", flush=True)
+        else:
+            print("\nNo payload found", flush=True)
 
-        results[file] = result
+        results[file] = result is not None
 
 """
 Results
 """
-
 print("\n")
 print(term.bold(term.underline(("Fuzzing Results"))))
-print(f"Successful fuzzes: {len([_ for _ in results.values() if _ is not None])}/{len(results.values())}")
+print(f"Successful fuzzes: {len([_ for _ in results.values() if _])}/{len(results.values())}")
 for file in results:
-    print(term.green(f"{file}: YES") if results[file] is not None else term.red(f"{file}: NO"))
+    print(term.green(f"{file}: YES") if results[file] else term.red(f"{file}: NO"))

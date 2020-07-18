@@ -3,6 +3,7 @@
 
 if __name__ == "__main__":
     import argparse, sys, os.path
+    from .util import strToBytes
 
     def checkFile(file):
         if not os.path.exists(file):
@@ -13,7 +14,7 @@ if __name__ == "__main__":
     parser.add_argument('program', type=checkFile, help='executable file to fuzz')
     parser.add_argument('--input', '-i', metavar="input", type=checkFile, help='input file')
     parser.add_argument('--type', '-t', choices=('json', 'csv', 'xml', 'plain'), help='fuzz input type')
-    parser.add_argument('--dest', '-d', metavar="dest", type=argparse.FileType('w'), help='destination crash data')
+    parser.add_argument('--dest', '-d', metavar="dest", type=argparse.FileType('wb'), help='destination crash data')
     parser.add_argument('--limit', '-l', type=int, metavar="limit", default=500, help='execution limit per strategy (default: 500)')
     parser.add_argument('--wait', '-w', action="store_true", help='wait for all strategies to finish')
     parser.add_argument('--verbose', '-v', action="store_true", help='verbose')
@@ -43,6 +44,6 @@ if __name__ == "__main__":
         if fuzzString is not None:
             print("\nFound a payload!")
             if args.dest:
-                args.dest.write(fuzzString)
+                args.dest.write(strToBytes(fuzzString))
         else:
             print("\nNo payload found")
