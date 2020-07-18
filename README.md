@@ -1,6 +1,7 @@
 # securiTEARS fuzzer xD
 
 ## Shipmates :3
+
 * euwunike
 * adruwu
 * oscrawr
@@ -8,6 +9,7 @@
 * teeheeon
 
 ## Alter-egos
+
 * Eunike Utojo 
 * Andrew Wong 
 * Oscar Cheung 
@@ -73,17 +75,21 @@ Fuzz a program using input data
 ```
 python3 -m securitears [program-name] -i [input-data-file]
 ```
+
 Limit the number of executions for each strategy:
 ```
 python3 -m securitears [program-name] -l [integer]
 ```
+
 Visually appealing progress bars (if you run the fuzzer without a progress bar you don't get to see progress 😥):
 ```
 python3 -m securitears [program-name] -v
 ```
-Fuzz the program using input data with a strategy execution limit of 1000, showing progress
+
+Fuzz the program using input data with a strategy execution limit of 1000, showing progress.  
+If a crash was successfully performed, save the payload
 ```
-python3 -m securitears [program-name] -i [input-data-file] -l 1000 -v
+python3 -m securitears [program-name] -i [input-data-file] -l 1000 -v -d [payload-file]
 ```
 
 ---
