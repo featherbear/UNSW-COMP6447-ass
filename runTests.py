@@ -1,8 +1,17 @@
 #!/usr/bin/python3
 
 FILE_PATH = "./tests/"
+LIMIT = 500
 
 ######################
+
+from blessed import Terminal
+term = Terminal()
+print(term.home + term.clear)
+
+# ./runTests <limit>
+try: import sys; LIMIT = int(sys.argv[1])
+except: pass
 
 """
 Find test programs
@@ -17,13 +26,27 @@ Fuzzer
 import securitears
 securitears.state.update(dict(verbose=True))
 
+results = {}
+
 for file in files:
     filePath = os.path.join(FILE_PATH, file)
 
     # Detect input format through some heuristics
-    bootstrap = securitears.detectFormat(filePath)
+    inputFile = (filePath + ".txt") if os.path.isfile(filePath + ".txt") else None
+    bootstrap = securitears.detectFormat(filePath, inputFile=inputFile)
 
-    with bootstrap(filePath) as w:
-        print(w, end=" ")
-        result = w.fuzz()
-        print(f"Payload: {result}" if result is not None else "No payload found", flush=True)
+    with bootstrap(filePath, inputFile=inputFile) as w:
+        result = w.fuzz(limit=LIMIT)
+        print("\n" + (f"Payload: FOUND" if result is not None else "No payload found"), flush=True)
+
+        results[file] = result
+
+"""
+Results
+"""
+
+print("\n")
+print(term.bold(term.underline(("Fuzzing Results"))))
+print(f"Successful fuzzes: {len([_ for _ in results.values() if _ is not None])}/{len(results.values())}")
+for file in results:
+    print(term.green(f"{file}: YES") if results[file] is not None else term.red(f"{file}: NO"))
