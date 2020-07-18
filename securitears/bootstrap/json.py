@@ -20,7 +20,7 @@ class Bootstrap(BaseBootstrap):
         except json.decoder.JSONDecodeError:
             pass
 
-        stat += util.strings(filename, split=False).lower().count("json")
+        stat += util.unix_strings(filename, split=False).lower().count("json")
         return stat
 
     @classmethod
