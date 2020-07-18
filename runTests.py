@@ -34,7 +34,7 @@ for file in files:
     with bootstrap(filePath, inputFile=(filePath + ".txt") if os.path.isfile(filePath + ".txt") else None) as w:
         print(w, end=" ")
         result = w.fuzz(limit=LIMIT)
-        print(f"Payload: FOUND" if result is not None else "No payload found", flush=True)
+        print("\n" + (f"Payload: FOUND" if result is not None else "No payload found"), flush=True)
 
         results[file] = result
 
