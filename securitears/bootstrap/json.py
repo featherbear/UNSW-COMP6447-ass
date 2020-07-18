@@ -14,11 +14,12 @@ class Bootstrap(BaseBootstrap):
     def detect(filename, inputData=None):
         stat = 0
         
-        try:
-            json.loads(inputData)
-            stat += 1000
-        except json.decoder.JSONDecodeError:
-            pass
+        if inputData is not None:
+            try:
+                json.loads(inputData)
+                stat += 1000
+            except json.decoder.JSONDecodeError:
+                pass
 
         stat += util.unix_strings(filename, split=False).lower().count("json")
         return stat
