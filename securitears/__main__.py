@@ -9,7 +9,7 @@ if __name__ == "__main__":
     parser.add_argument('--input', '-i', metavar="input", type=argparse.FileType('r'), help='input file')
     parser.add_argument('--type', '-t', choices=('json', 'csv', 'xml', 'plain'), help='fuzz input type')
     parser.add_argument('--dest', '-d', metavar="dest", type=argparse.FileType('w'), help='destination crash data')
-    parser.add_argument('--limit', '-l', type=int, metavar="limit", help='execution limit per strategy')
+    parser.add_argument('--limit', '-l', type=int, metavar="limit", default=500, help='execution limit per strategy (default: 500)')
     parser.add_argument('--verbose', '-v', action="store_true", help='verbose')
 
     if len(sys.argv) == 1:
