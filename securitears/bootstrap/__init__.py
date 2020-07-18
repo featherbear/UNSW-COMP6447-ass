@@ -3,13 +3,15 @@
 
 ##############################################################
 
+from ..util import strResolveFile
+
 """
 Select bootstrap with highest score
 """
-def detectFormat(filePath):
-    if not os.path.isfile(filePath):
-        raise FileNotFoundError(f"{filePath} does not exist")
-    results = [(bootstrap, bootstrap.detect(filePath)) for bootstrap in __modules.values()]
+def detectFormat(filePath, inputFile=None):
+    strResolveFile(filePath)    
+    
+    data = strResolveFile(inputFile, openFile=True)
     return sorted(results, key=lambda p: p[1])[-1][0]
 
 
@@ -28,17 +30,10 @@ class BaseBootstrap:
     from .. import strategy
 
     def __init__(self, filePath, *, inputFile=None):
-        if not os.path.isfile(filePath):
-            raise FileNotFoundError(f"{filePath} does not exist")
-
-        if type(inputFile) is str:
-            if not os.path.isfile(inputFile):
-                raise FileNotFoundError(f"{inputFile} does not exist")           
-            inputFile = open(inputFile)
-
-        self.filePath = filePath
-        self.inputData = inputFile.read() if inputFile else None
+        self.filePath = strResolveFile(filePath)
         self.harness = Harness(filePath)
+
+        inputFile = strResolveFile(inputFile, openFile = True)
     
     def __repr__(self):
         return f"Bootstrap :: {self.filePath}"
