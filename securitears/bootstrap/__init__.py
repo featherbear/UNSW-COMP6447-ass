@@ -3,13 +3,18 @@
 
 ##############################################################
 
+from ..util import strResolveFile
+
 """
 Select bootstrap with highest score
 """
-def detectFormat(filePath):
-    if not os.path.isfile(filePath):
-        raise FileNotFoundError(f"{filePath} does not exist")
-    results = [(bootstrap, bootstrap.detect(filePath)) for bootstrap in __modules.values()]
+def detectFormat(filePath, inputFile=None):
+    strResolveFile(filePath)    
+    
+    data = strResolveFile(inputFile, openFile=True)
+    inputData = data.read() if data else None
+    
+    results = [(bootstrap, bootstrap.detect(filePath, inputData=inputData)) for bootstrap in __modules.values()]
     return sorted(results, key=lambda p: p[1])[-1][0]
 
 
@@ -21,19 +26,18 @@ Inherit this class to create a new bootstrap
 """
 import os.path
 from ..Harness import Harness
-from .. import strategy, state
+from .. import state
 import enlighten
 
 class BaseBootstrap: 
-    def __init__(self, filePath, *, inputData=None):
-        if not os.path.isfile(filePath):
-            raise FileNotFoundError(f"{filePath} does not exist")
-        if inputData is not None and not os.path.isfile(inputData):
-            raise FileNotFoundError(f"{inputData} does not exist")
+    from .. import strategy
 
-        self.filePath = filePath
-        self.inputData = inputData
+    def __init__(self, filePath, *, inputFile=None):
+        self.filePath = strResolveFile(filePath)
         self.harness = Harness(filePath)
+
+        inputFile = strResolveFile(inputFile, openFile = True)
+        self.inputData = inputFile.read() if inputFile else None
     
     def __repr__(self):
         return f"Bootstrap :: {self.filePath}"
@@ -53,14 +57,20 @@ class BaseBootstrap:
 
     def parse(self):
         raise NotImplementedError()
-        
+
+    @classmethod
+    def getStrategies(cls):
+        return cls.strategy["common"]
+
     def fuzz(self, *, limit=None):
         if type(limit) is int and limit <= 0:
             limit = None
-        #                         TODO: INPUT DATA - Parse???
-        active = dict((p[0], p[1](             )) for p in strategy.items())
+
+        strategy = self.getStrategies()
+        active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
+
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
-        manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}{elapsed}',
+        manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}' + str(self) +'{fill}{elapsed}',
                            color='bold_underline_bright_white_on_lightslategray',
                            justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
                           )
@@ -95,7 +105,7 @@ class BaseBootstrap:
         return None
     
     @staticmethod
-    def detect(filename):
+    def detect(filename, inputData=None):
         # raise NotImplementedError()
         return 0
 

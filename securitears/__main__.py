@@ -20,7 +20,7 @@ if __name__ == "__main__":
     
     if args.type is None:
         from . import detectFormat
-        bootstrap = detectFormat(args.program)
+        bootstrap = detectFormat(args.program, inputFile=args.input)
     else:
         from . import bootstrap
         bootstrap = bootstrap[args.type]
@@ -28,11 +28,10 @@ if __name__ == "__main__":
     from . import state
     state["verbose"] = args.verbose
 
-    with bootstrap(args.program) as w:
+    with bootstrap(args.program, inputFile=args.input) as w:
         print(w)
         fuzzString = w.fuzz(limit=args.limit)
         if fuzzString is not None:
-            print("Found a payload:")
-            print(fuzzString) 
+            print("Found a payload!")
         else:
             print("No payload found")
