@@ -40,8 +40,8 @@ if __name__ == "__main__":
     with bootstrap(args.program, inputFile=args.input) as w:
         fuzzString = w.fuzz(limit=args.limit)
         if fuzzString is not None:
-            print("Found a payload!")
+            print("\nFound a payload!")
             if args.dest:
                 args.dest.write(fuzzString)
         else:
-            print("No payload found")
+            print("\nNo payload found")
