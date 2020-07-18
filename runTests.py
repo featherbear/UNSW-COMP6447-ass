@@ -29,10 +29,10 @@ for file in files:
     filePath = os.path.join(FILE_PATH, file)
 
     # Detect input format through some heuristics
-    bootstrap = securitears.detectFormat(filePath)
+    inputFile = (filePath + ".txt") if os.path.isfile(filePath + ".txt") else None
+    bootstrap = securitears.detectFormat(filePath, inputFile=inputFile)
 
-    with bootstrap(filePath, inputFile=(filePath + ".txt") if os.path.isfile(filePath + ".txt") else None) as w:
-        print(w, end=" ")
+    with bootstrap(filePath, inputFile=inputFile) as w:
         result = w.fuzz(limit=LIMIT)
         print(f"Payload: FOUND" if result is not None else "No payload found", flush=True)
 

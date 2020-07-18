@@ -12,6 +12,9 @@ def detectFormat(filePath, inputFile=None):
     strResolveFile(filePath)    
     
     data = strResolveFile(inputFile, openFile=True)
+    inputData = data.read() if data else None
+    
+    results = [(bootstrap, bootstrap.detect(filePath, inputData=inputData)) for bootstrap in __modules.values()]
     return sorted(results, key=lambda p: p[1])[-1][0]
 
 
@@ -34,6 +37,7 @@ class BaseBootstrap:
         self.harness = Harness(filePath)
 
         inputFile = strResolveFile(inputFile, openFile = True)
+        self.inputData = inputFile.read() if inputFile else None
     
     def __repr__(self):
         return f"Bootstrap :: {self.filePath}"
@@ -101,7 +105,7 @@ class BaseBootstrap:
         return None
     
     @staticmethod
-    def detect(filename):
+    def detect(filename, inputData=None):
         # raise NotImplementedError()
         return 0
 

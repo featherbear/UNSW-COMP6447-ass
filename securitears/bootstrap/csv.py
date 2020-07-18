@@ -9,9 +9,12 @@ class Bootstrap(BaseBootstrap):
         return f"<CSV {super().__repr__()}>"
 
     @staticmethod
-    def detect(filename):
-        # harness = Harness(filename)
-        return util.strings(filename, split=False).lower().count("csv")
+    def detect(filename, inputData=None):
+        stat = 0
+        
+        stat += util.strings(filename, split=False).lower().count("csv")
+        return stat
+
 
     @classmethod
     def getStrategies(cls):
