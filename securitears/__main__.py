@@ -4,9 +4,14 @@
 if __name__ == "__main__":
     import argparse, sys, os.path
 
+    def checkFile(file):
+        if not os.path.exists(file):
+            parser.error(f"{file} does not exist!")
+        return file
+
     parser = argparse.ArgumentParser(description='COMP6447 Fuzzer Project', prog="securitears", epilog="Dedicated to Adam Banana")
-    parser.add_argument('program', type=lambda file: file if os.path.exists(file) else parser.error(f"The program {file} does not exist!"), help='executable file to fuzz')
-    parser.add_argument('--input', '-i', metavar="input", type=argparse.FileType('r'), help='input file')
+    parser.add_argument('program', type=checkFile, help='executable file to fuzz')
+    parser.add_argument('--input', '-i', metavar="input", type=checkFile, help='input file')
     parser.add_argument('--type', '-t', choices=('json', 'csv', 'xml', 'plain'), help='fuzz input type')
     parser.add_argument('--dest', '-d', metavar="dest", type=argparse.FileType('w'), help='destination crash data')
     parser.add_argument('--limit', '-l', type=int, metavar="limit", default=500, help='execution limit per strategy (default: 500)')
