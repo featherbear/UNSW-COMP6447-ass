@@ -94,12 +94,13 @@ class BaseBootstrap:
                 if self.testRaw(data):
                     counters[strat].color = "green"
                     counters[strat].total = counters[strat].count
-                    counters[strat].close()
-                    for c in counters.values(): c.close()
+                    for c in active.keys(): counters[c].close()
                     manager.stop()
                     return data
 
-        for c in counters.values(): c.close()
+        for c in counters.values():
+            if c.enabled:
+                c.close()
         manager.stop()
         
         return None
