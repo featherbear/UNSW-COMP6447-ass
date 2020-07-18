@@ -5,6 +5,11 @@ LIMIT = 2000
 
 ######################
 
+from blessed import Terminal
+term = Terminal()
+
+print(term.home + term.clear)
+
 """
 Find test programs
 """
@@ -18,6 +23,8 @@ Fuzzer
 import securitears
 securitears.state.update(dict(verbose=True))
 
+results = {}
+
 for file in files:
     filePath = os.path.join(FILE_PATH, file)
 
@@ -28,3 +35,15 @@ for file in files:
         print(w, end=" ")
         result = w.fuzz(limit=LIMIT)
         print(f"Payload: FOUND" if result is not None else "No payload found", flush=True)
+
+        results[file] = result
+
+"""
+Results
+"""
+
+print("\n")
+print(term.bold(term.underline(("Fuzzing Results"))))
+print(f"Successful fuzzes: {len([_ for _ in results.values() if _ is not None])}/{len(results.values())}")
+for file in results:
+    print(term.green(f"{file}: YES") if results[file] is not None else term.red(f"{file}: NO"))
