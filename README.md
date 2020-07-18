@@ -47,7 +47,7 @@ python3 -m securitears -h
 ```
 
 ```
-usage: securitears [-h] [--input input] [--type {json,csv,xml,plain}] [--dest dest] [--limit limit] [--verbose] program
+usage: securitears [-h] [--input input] [--type {json,csv,xml,plain}] [--dest dest] [--limit limit] [--wait] [--verbose] program
 
 COMP6447 Fuzzer Project
 
@@ -63,6 +63,7 @@ optional arguments:
   --dest dest, -d dest  destination crash data
   --limit limit, -l limit
                         execution limit per strategy (default: 500)
+  --wait, -w            wait for all strategies to finish
   --verbose, -v         verbose
 
 Dedicated to Adam Banana
