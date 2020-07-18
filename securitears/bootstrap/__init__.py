@@ -62,7 +62,7 @@ class BaseBootstrap:
     def getStrategies(cls):
         return cls.strategy["common"]
 
-    def fuzz(self, *, limit=None):
+    def fuzz(self, *, limit=None, wait=False):
         if type(limit) is int and limit <= 0:
             limit = None
 
@@ -75,6 +75,8 @@ class BaseBootstrap:
                            justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
                           )
         counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations', color='grey')) for p in strategy.items())
+
+        waitResult = None
 
         while len(active) > 0:
             for strat in [*active.keys()]:
@@ -94,16 +96,22 @@ class BaseBootstrap:
                 if self.testRaw(data):
                     counters[strat].color = "green"
                     counters[strat].total = counters[strat].count
-                    for c in active.keys(): counters[c].close()
-                    manager.stop()
-                    return data
+                    if wait:
+                        del active[strat]
+                        counters[strat].close()
+                        if waitResult is None:
+                            waitResult = data
+                    else:
+                        for c in active.keys(): counters[c].close()
+                        manager.stop()
+                        return data
 
         for c in counters.values():
             if c.enabled:
                 c.close()
         manager.stop()
         
-        return None
+        return waitResult
     
     @staticmethod
     def detect(filename, inputData=None):
