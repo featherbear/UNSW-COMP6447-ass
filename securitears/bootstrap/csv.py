@@ -12,7 +12,7 @@ class Bootstrap(BaseBootstrap):
     def detect(filename, inputData=None):
         stat = 0
         
-        stat += util.strings(filename, split=False).lower().count("csv")
+        stat += util.unix_strings(filename, split=False).lower().count("csv")
         return stat
 
 

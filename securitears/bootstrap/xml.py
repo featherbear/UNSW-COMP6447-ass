@@ -20,7 +20,7 @@ class Bootstrap(BaseBootstrap):
         except XML.ParseError:
             pass
 
-        stat += util.strings(filename, split=False).lower().count("xml")
+        stat += util.unix_strings(filename, split=False).lower().count("xml")
         return stat
 
     @classmethod
