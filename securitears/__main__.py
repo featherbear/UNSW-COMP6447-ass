@@ -23,6 +23,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     
+    if args.input is None and os.path.isfile(args.program + ".txt"):
+        print("Automatically detected input file:", args.program + ".txt")
+        args.input = args.program + ".txt"
+
     if args.type is None:
         from . import detectFormat
         bootstrap = detectFormat(args.program, inputFile=args.input)
