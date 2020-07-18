@@ -67,14 +67,19 @@ class BaseBootstrap:
             limit = None
 
         strategy = self.getStrategies()
-        active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
+        
+        active = dict()
+        for strat, factory in strategy.items():
+            generator = factory(self.inputData)
+            if generator is not None:
+                active[strat] = generator
 
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
         manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}' + str(self) +'{fill}{elapsed}',
                            color='bold_underline_bright_white_on_lightslategray',
                            justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
                           )
-        counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations', color='grey')) for p in strategy.items())
+        counters = dict((k, manager.counter(total=limit, desc=k, unit='iterations', color='grey')) for k in active.keys())
 
         waitResult = None
 
