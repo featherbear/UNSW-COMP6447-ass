@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 FILE_PATH = "./tests/"
+VERBOSE = True
 LIMIT = 500
 WAIT = True
 
@@ -25,7 +26,7 @@ files = filter(lambda name: fileFilter.match(os.path.basename(name)), os.listdir
 Fuzzer
 """
 import securitears
-securitears.state.update(dict(verbose=True))
+securitears.state.update(dict(verbose=VERBOSE))
 
 results = {}
 
