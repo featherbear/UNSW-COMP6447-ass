@@ -1,8 +1,6 @@
 import json
 import copy
 
-# Finds all 
-
 def strategy(data=None):
     if not data: return
     data = json.loads(data)

@@ -20,7 +20,7 @@ if __name__ == "__main__":
     
     if args.type is None:
         from . import detectFormat
-        bootstrap = detectFormat(args.program)
+        bootstrap = detectFormat(args.program, inputFile=args.input)
     else:
         from . import bootstrap
         bootstrap = bootstrap[args.type]
