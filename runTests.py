@@ -2,6 +2,7 @@
 
 FILE_PATH = "./tests/"
 LIMIT = 500
+WAIT = True
 
 ######################
 
@@ -36,7 +37,7 @@ for file in files:
     bootstrap = securitears.detectFormat(filePath, inputFile=inputFile)
 
     with bootstrap(filePath, inputFile=inputFile) as w:
-        result = w.fuzz(limit=LIMIT)
+        result = w.fuzz(limit=LIMIT, wait=WAIT)
         print("\n" + (f"Payload: FOUND" if result is not None else "No payload found"), flush=True)
 
         results[file] = result
