@@ -62,19 +62,26 @@ class BaseBootstrap:
     def getStrategies(cls):
         return cls.strategy["common"]
 
-    def fuzz(self, *, limit=None):
+    def fuzz(self, *, limit=None, wait=False):
         if type(limit) is int and limit <= 0:
             limit = None
 
         strategy = self.getStrategies()
-        active = dict((p[0], p[1](self.inputData)) for p in strategy.items())
+        
+        active = dict()
+        for strat, factory in strategy.items():
+            generator = factory(self.inputData)
+            if generator is not None:
+                active[strat] = generator
 
         manager = enlighten.get_manager(enabled=state.get("verbose", False))
         manager.status_bar(status_format=u'Fuzzing: ' + os.path.basename(self.filePath) + '{fill}' + str(self) +'{fill}{elapsed}',
                            color='bold_underline_bright_white_on_lightslategray',
                            justify=enlighten.Justify.CENTER, autorefresh=True, min_delta=0.5
                           )
-        counters = dict((p[0], manager.counter(total=limit, desc=p[0], unit='iterations', color='grey')) for p in strategy.items())
+        counters = dict((k, manager.counter(total=limit, desc=k, unit='iterations', color='grey')) for k in active.keys())
+
+        waitResult = None
 
         while len(active) > 0:
             for strat in [*active.keys()]:
@@ -94,15 +101,22 @@ class BaseBootstrap:
                 if self.testRaw(data):
                     counters[strat].color = "green"
                     counters[strat].total = counters[strat].count
-                    counters[strat].close()
-                    for c in counters.values(): c.close()
-                    manager.stop()
-                    return data
+                    if wait:
+                        del active[strat]
+                        counters[strat].close()
+                        if waitResult is None:
+                            waitResult = data
+                    else:
+                        for c in active.keys(): counters[c].close()
+                        manager.stop()
+                        return data
 
-        for c in counters.values(): c.close()
+        for c in counters.values():
+            if c.enabled:
+                c.close()
         manager.stop()
         
-        return None
+        return waitResult
     
     @staticmethod
     def detect(filename, inputData=None):

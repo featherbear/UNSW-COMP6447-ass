@@ -15,4 +15,3 @@ def strategy(data=None):
     yield -0.1
     yield -0.000000001
     yield math.sqrt(2)
-    yield None
