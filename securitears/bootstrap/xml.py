@@ -14,13 +14,14 @@ class Bootstrap(BaseBootstrap):
     def detect(filename, inputData=None):
         stat = 0
         
-        try:
-            XML.fromstring(inputData)
-            stat += 1000
-        except XML.ParseError:
-            pass
+        if inputData is not None:
+            try:
+                XML.fromstring(inputData)
+                stat += 1000
+            except XML.ParseError:
+                pass
 
-        stat += util.strings(filename, split=False).lower().count("xml")
+        stat += util.unix_strings(filename, split=False).lower().count("xml")
         return stat
 
     @classmethod

@@ -1,4 +1,4 @@
-# Generates strings of lengths 0 to n
+# Generates strings of lengths 1 to n
 
 def strategy(data=None):
     limit = 10240
