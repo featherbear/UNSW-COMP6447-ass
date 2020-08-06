@@ -1,5 +1,8 @@
+import random
+
 def all_char_generator():
-    return (chr(i) for i in range(128))
+  for i in range(50):
+    yield chr(random.randint(0, 128))
 
 def strategy(data=None):
     yield from all_char_generator()
