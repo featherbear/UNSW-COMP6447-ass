@@ -16,7 +16,7 @@ class Harness:
                               stdout=subprocess.DEVNULL,
                               stderr=subprocess.DEVNULL) as p:
             data = p.communicate(data)
-            return p.returncode not in [0, None]
+            return (p.returncode or 0) < 0
 
     def communicate(self, data):
         with subprocess.Popen(self.filePath,
