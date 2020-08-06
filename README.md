@@ -47,7 +47,7 @@ python3 -m securitears -h
 ```
 
 ```
-usage: securitears [-h] [--input input] [--type {json,csv,xml,plain}] [--dest dest] [--limit limit] [--wait] [--verbose] program
+usage: securitears [-h] [--input input] [--type {json,csv,xml,plain}] [--strategy STRATEGY] [--dest dest] [--limit limit] [--wait] [--verbose] program
 
 COMP6447 Fuzzer Project
 
@@ -60,6 +60,8 @@ optional arguments:
                         input file
   --type {json,csv,xml,plain}, -t {json,csv,xml,plain}
                         fuzz input type
+  --strategy STRATEGY, -s STRATEGY
+                        select specific strategy
   --dest dest, -d dest  destination crash data
   --limit limit, -l limit
                         execution limit per strategy (default: 500)
@@ -72,9 +74,15 @@ Dedicated to Adam Banana
 **NOTE:** Make sure your binaries have executable permissions!
 
 ## Some useful ways to start the fuzzer
+
 Fuzz a program using input data
 ```
 python3 -m securitears [program-name] -i [input-data-file]
+```
+
+Fuzz a program with a specific strategy
+```
+python3 -m securitears [program-name] -s [strategy]
 ```
 
 Limit the number of executions for each strategy:

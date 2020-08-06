@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description='COMP6447 Fuzzer Project', prog="se
 parser.add_argument('program', type=checkFile, help='executable file to fuzz')
 parser.add_argument('--input', '-i', metavar="input", type=checkFile, help='input file')
 parser.add_argument('--type', '-t', choices=('json', 'csv', 'xml', 'plain'), help='fuzz input type')
+parser.add_argument('--strategy', '-s', type=str, help='select specific strategy')
 parser.add_argument('--dest', '-d', metavar="dest", type=argparse.FileType('wb'), help='destination crash data')
 parser.add_argument('--limit', '-l', type=int, metavar="limit", default=500, help='execution limit per strategy (default: 500)')
 parser.add_argument('--wait', '-w', action="store_true", help='wait for all strategies to finish')
@@ -39,7 +40,7 @@ from . import state
 state["verbose"] = args.verbose
 
 with bootstrap(args.program, inputFile=args.input) as w:
-    fuzzString = w.fuzz(limit=args.limit, wait=args.wait)
+    fuzzString = w.fuzz(limit=args.limit, wait=args.wait, strategyName=args.strategy)
     if fuzzString is not None:
         print("\nFound a payload!")
         if args.dest:
