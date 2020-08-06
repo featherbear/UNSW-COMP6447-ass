@@ -14,7 +14,6 @@ export default class App extends React.Component {
       easing: 'easeInOutSine'
     })
     let o
-    console.log(anime)
     anime({
       targets: 'svg #Ship',
       // Andrew, why.
