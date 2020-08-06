@@ -62,11 +62,16 @@ class BaseBootstrap:
     def getStrategies(cls):
         return cls.strategy["common"]
 
-    def fuzz(self, *, limit=None, wait=False):
+    def fuzz(self, *, limit=None, wait=False, strategyName=None):
         if type(limit) is int and limit <= 0:
             limit = None
 
         strategy = self.getStrategies()
+        if strategyName is not None:
+            if strategyName not in strategy:
+                print(f"Error: No strategy named `{strategyName}`")
+                return None
+            strategy = {strategyName: strategy[strategyName]}
         
         active = dict()
         for strat, factory in strategy.items():
