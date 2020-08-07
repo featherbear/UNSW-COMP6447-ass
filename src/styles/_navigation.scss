@@ -8,6 +8,9 @@
 
     height: 64px;
 
+
+    
+
     h2 {
         flex: 1;
         text-align: center;
@@ -19,5 +22,16 @@
         justify-content: center;
 
         cursor: pointer;
+        
+        transition: opacity 0.3s;
+        opacity: 0.6;
+
+        &:hover {
+            opacity: 0.9;
+        }
+        &.active-page {
+            opacity: 1;
+            font-weight: bold;
+        }
     }
 }

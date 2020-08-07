@@ -69,14 +69,18 @@ export default class App extends React.Component {
     (window.onhashchange = hashPage)()
   }
 
+  renderNavBtn (display, handler) {
+    return <h2 className={this.state.page === handler ? 'active-page' : ''} onClick={() => this.handlePageChange(handler)}>{display}</h2>
+  }
+
   render () {
     return (
       <div className='container'>
         <HeadingCover />
         <div className='content'>
           <div className='nav-bar'>
-            <h2 onClick={() => this.handlePageChange('home')}>Home</h2>
-            <h2 onClick={() => this.handlePageChange('crew')}>Crew</h2>
+            {this.renderNavBtn('Home', 'home')}
+            {this.renderNavBtn('Crew', 'crew')}
           </div>
 
           {/*
