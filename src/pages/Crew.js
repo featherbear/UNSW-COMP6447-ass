@@ -8,27 +8,27 @@ export default class App extends React.Component {
         <h1 className='center'>Meet the Crew</h1>
         <div className='d-flex flex-column'>
           {createProfile(
-            "Capt'n",
+            "Captain - Eunike",
             'https://www.kindpng.com/picc/m/95-950368_girl-pirate-eye-patch-cartoon-hd-png-download.png',
             'wee'
           )}
           {createProfile(
-            'Best Mate',
+            'Best Mate - Andrew',
             'https://www.kindpng.com/picc/m/95-950368_girl-pirate-eye-patch-cartoon-hd-png-download.png',
             ''
           )}
           {createProfile(
-            'First Mate',
+            'First Mate - Oscar',
             'https://www.kindpng.com/picc/m/95-950368_girl-pirate-eye-patch-cartoon-hd-png-download.png',
             ''
           )}
           {createProfile(
-            'ROGER WHAT ARE YOU. WHO ARE YOU',
+            'ROGER WHAT ARE YOU. WHO ARE YOU - Roger',
             'https://www.kindpng.com/picc/m/95-950368_girl-pirate-eye-patch-cartoon-hd-png-download.png',
             ''
           )}
           {createProfile(
-            'Ship Rat / Parrot',
+            'Ship Rat / Parrot - Theon',
             'https://www.kindpng.com/picc/m/95-950368_girl-pirate-eye-patch-cartoon-hd-png-download.png',
             ''
           )}
