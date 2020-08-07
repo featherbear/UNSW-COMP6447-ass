@@ -4,6 +4,8 @@ import React from 'react'
 import FlexRow from '../utils/FlexRow'
 import ShipContainer from './ShipContainer'
 import TitleFuzz from './TitleFuzz'
+import Chevron from './Chevron'
+
 import CoverPage from '../utils/CoverPage'
 
 export default class extends React.Component {
@@ -36,6 +38,9 @@ export default class extends React.Component {
           <ShipContainer style={this.state.shipStyle} />
           <TitleFuzz style={this.state.textStyle} />
         </FlexRow>
+        <span onClick={this.props.handleBtnAction} style={{ position: 'absolute', margin: '0 auto', width: '70px', opacity: 0.8, bottom: '8vh', cursor: 'pointer' }}>
+          <Chevron />
+        </span>
       </CoverPage>
     )
   }

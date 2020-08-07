@@ -21,9 +21,11 @@ export default class App extends React.Component {
       currentPage: null
     }
 
-    this.handlePageChange = this.handlePageChange.bind(this)
     this.homeRef = React.createRef()
     this.navRef = React.createRef()
+
+    this.handlePageChange = this.handlePageChange.bind(this)
+    this.scrollToContent = this.scrollToContent.bind(this)
   }
 
   handlePageChange (page) {
@@ -56,6 +58,7 @@ export default class App extends React.Component {
           }
         })()
         if (newElement === null) {
+          // Default page
           window.location.hash = 'home'
           return
           // return this.handlePageChange('home')
@@ -67,8 +70,15 @@ export default class App extends React.Component {
         })
       }
 
-      ReactDOM.findDOMNode(this.navRef.current).scrollIntoView()
+      this.scrollToContent()
     }
+  }
+
+  scrollToContent () {
+    if (this.state.page === '') {
+      return this.handlePageChange(null)
+    }
+    ReactDOM.findDOMNode(this.navRef.current).scrollIntoView()
   }
 
   componentDidMount () {
@@ -97,17 +107,16 @@ export default class App extends React.Component {
       <div>
         <div style={{ background: 'white' }} ref={this.homeRef}>
           <div className='container'>
-            <HeadingCover />
-          </div>
-        </div>
-        <div className='nav-bar-container'>
-          <div className='nav-bar no-select' ref={this.navRef}>
-            {this.renderNavBtn('Home', 'home')}
-            {this.renderNavBtn('Crew', 'crew')}
+            <HeadingCover handleBtnAction={this.scrollToContent} />
           </div>
         </div>
         <div className='container'>
-
+          <div className='nav-bar-container'>
+            <div className='nav-bar no-select' ref={this.navRef}>
+              {this.renderNavBtn('Home', 'home')}
+              {this.renderNavBtn('Crew', 'crew')}
+            </div>
+          </div>
           {/*
                 Perfect SCSS candidate here. @captain
                 (Andrew, best mate, 20, less confused here)
