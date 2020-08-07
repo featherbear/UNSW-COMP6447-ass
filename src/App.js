@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import HeadingCover from './components/cover'
 import CoverPage from './components/utils/CoverPage'
@@ -20,6 +21,7 @@ export default class App extends React.Component {
     }
 
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.navRef = React.createRef('null')
   }
 
   handlePageChange (page) {
@@ -49,6 +51,8 @@ export default class App extends React.Component {
           currentPage: newElement
         })
       }
+
+      ReactDOM.findDOMNode(this.navRef.current).scrollIntoView()
     }
   }
 
@@ -78,7 +82,7 @@ export default class App extends React.Component {
       <div className='container'>
         <HeadingCover />
         <div className='content'>
-          <div className='nav-bar'>
+          <div className='nav-bar' ref={this.navRef}>
             {this.renderNavBtn('Home', 'home')}
             {this.renderNavBtn('Crew', 'crew')}
           </div>
