@@ -71,9 +71,9 @@ export default class App extends React.Component {
 
   render () {
     return (
-      <div className='page'>
+      <div className='container'>
         <HeadingCover />
-        <div id='content' className='page'>
+        <div className='content'>
           <div className='nav-bar'>
             <h2 onClick={() => this.handlePageChange('home')}>Home</h2>
             <h2 onClick={() => this.handlePageChange('crew')}>Crew</h2>
