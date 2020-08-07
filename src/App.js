@@ -22,11 +22,23 @@ export default class App extends React.Component {
     }
 
     this.handlePageChange = this.handlePageChange.bind(this)
-    this.navRef = React.createRef('null')
+    this.homeRef = React.createRef()
+    this.navRef = React.createRef()
   }
 
   handlePageChange (page) {
     if (this.state.page !== page) {
+      if (page === '') {
+        this.setState({
+          page,
+          currentPage: null
+        })
+
+        ReactDOM.findDOMNode(this.homeRef.current).scrollIntoView()
+
+        return
+      }
+
       // Shouldn't we be using a Router or something?
       // (Andrew, best mate, 20, still confused)
       if (page in this.state.pageCache) {
@@ -44,7 +56,9 @@ export default class App extends React.Component {
           }
         })()
         if (newElement === null) {
-          return this.handlePageChange('home')
+          window.location.hash = 'home'
+          return
+          // return this.handlePageChange('home')
         }
         this.setState({
           page,
@@ -70,7 +84,7 @@ export default class App extends React.Component {
 
       // "Stop it Andrew, you're scaring them"
     */
-    const hashPage = () => this.handlePageChange((window.location.hash.substr(1) || 'home').toLowerCase()) && false;
+    const hashPage = () => this.handlePageChange((window.location.hash.substr(1) || '').toLowerCase()) && false;
     (window.onhashchange = hashPage)()
   }
 
@@ -81,7 +95,7 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        <div style={{ background: 'white' }}>
+        <div style={{ background: 'white' }} ref={this.homeRef}>
           <div className='container'>
             <HeadingCover />
           </div>
