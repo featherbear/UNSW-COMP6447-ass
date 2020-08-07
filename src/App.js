@@ -1,8 +1,8 @@
 import React from 'react'
 
+import HeadingCover from './components/cover'
 import CoverPage from './components/utils/CoverPage'
 
-import HeadingCover from './components/HeadingCover'
 import Home from './pages/Home'
 import Who from './pages/Who'
 
@@ -30,7 +30,7 @@ export default class App extends React.Component {
       <div className='page'>
         <HeadingCover />
         <CoverPage>
-          <div className='page'>
+          <div id='content' className='page'>
             <div className='nav-bar'>
               <h2 onClick={() => this.handlePageChange('home')}>Home</h2>
               <h2 onClick={() => this.handlePageChange('who')}>Who</h2>

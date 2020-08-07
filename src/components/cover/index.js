@@ -1,10 +1,10 @@
 
 import React from 'react'
 
-import FlexRow from './utils/FlexRow'
+import FlexRow from '../utils/FlexRow'
 import ShipContainer from './ShipContainer'
 import TitleFuzz from './TitleFuzz'
-import CoverPage from './utils/CoverPage'
+import CoverPage from '../utils/CoverPage'
 
 export default class extends React.Component {
   constructor (props) {
