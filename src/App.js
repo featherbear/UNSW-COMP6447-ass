@@ -29,15 +29,20 @@ export default class App extends React.Component {
     return (
       <div className='page'>
         <HeadingCover />
-        <CoverPage>
-          <div id='content' className='page'>
-            <div className='nav-bar'>
-              <h2 onClick={() => this.handlePageChange('home')}>Home</h2>
-              <h2 onClick={() => this.handlePageChange('who')}>Who</h2>
-            </div>
-            {this.state.page === 'home' ? <Home /> : <Who />}
+        <div id='content' className='page'>
+          <div className='nav-bar'>
+            <h2 onClick={() => this.handlePageChange('home')}>Home</h2>
+            <h2 onClick={() => this.handlePageChange('who')}>Who</h2>
           </div>
-        </CoverPage>
+          {this.state.page === 'home' ? <Home /> : <Who />}
+
+          {/*  Dummy space */}
+
+          <CoverPage />
+          <CoverPage />
+
+        </div>
+
       </div>
     )
   }
