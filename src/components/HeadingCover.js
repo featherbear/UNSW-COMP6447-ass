@@ -3,6 +3,7 @@ import React from 'react'
 
 import FlexRow from './utils/FlexRow'
 import ShipContainer from './ShipContainer'
+import TitleFuzz from './TitleFuzz'
 import CoverPage from './utils/CoverPage'
 
 export default class extends React.Component {
@@ -70,7 +71,7 @@ export default class extends React.Component {
       <CoverPage>
         <FlexRow style={this.state.containerStyle}>
           <ShipContainer svgContainerStyle={this.state.shipStyle} />
-          <span style={this.state.textStyle}>securitears.</span>
+          <TitleFuzz style={this.state.textStyle} />
         </FlexRow>
       </CoverPage>
     )

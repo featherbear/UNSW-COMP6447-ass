@@ -12,7 +12,7 @@ export default class extends React.Component {
       }
     }
     return (
-      <div style={{ ...styles.container, ...(this.props.style || {}) }}>
+      <div className='flexRow' style={{ ...styles.container, ...(this.props.style || {}) }}>
         {this.props.children}
       </div>
     )

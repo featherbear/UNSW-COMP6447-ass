@@ -3,8 +3,11 @@ import PirateShip from './PirateShip'
 
 export default class extends React.Component {
   render () {
+    const style = {
+      width: '100%'
+    }
     return (
-      <div style={this.props.svgContainerStyle}>
+      <div style={{ ...style, ...this.props.svgContainerStyle }}>
         <PirateShip />
       </div>
     )

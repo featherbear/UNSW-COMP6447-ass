@@ -26,7 +26,7 @@ function generateNewString (text) {
 }
 
 const style = {
-  minWidth: '200px'
+  minWidth: '300px'
 }
 
 export default function (props) {
