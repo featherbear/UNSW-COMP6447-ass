@@ -35,7 +35,7 @@ export default function (props) {
   useEffect(() => {
     const interval = setInterval(() => {
       updateText(generateNewString(text))
-    }, 500)
+    }, 250)
 
     return () => clearInterval(interval)
   })
