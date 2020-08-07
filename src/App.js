@@ -36,8 +36,13 @@ export default class App extends React.Component {
           switch (page) {
             case 'home': return <Home />
             case 'crew': return <Crew />
+            default:
+              return null
           }
         })()
+        if (newElement === null) {
+          return this.handlePageChange('home')
+        }
         this.setState({
           page,
           pageCache: { ...this.state.pageCache, [page]: newElement },
@@ -47,8 +52,24 @@ export default class App extends React.Component {
     }
   }
 
+  componentDidMount () {
+    /*
+           .-.
+          ( " )
+      /\_.' '._/\
+      |         |
+        \       /
+        \    /`
+      (__)  /
+      `.__.'
+
+      // "Stop it Andrew, you're scaring them"
+    */
+    const hashPage = () => this.handlePageChange((window.location.hash.substr(1) || 'home').toLowerCase());
+    (window.onhashchange = hashPage)()
+  }
+
   render () {
-    // if (this.state.page === null) this.handlePageChange('home')
     return (
       <div className='page'>
         <HeadingCover />
