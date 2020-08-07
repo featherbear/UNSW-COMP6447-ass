@@ -1,15 +1,18 @@
 .nav-bar-container {
   width: 100%;
+  background-color: white;
 
   .nav-bar {
     position: sticky;
     top: 0;
-    background-color: white;
 
     display: flex;
     flex-direction: row;
 
+    width: 80%;
     height: 64px;
+
+    margin: 0 auto;
 
     h2 {
       flex: 1;

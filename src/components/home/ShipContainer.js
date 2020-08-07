@@ -7,7 +7,7 @@ export default class extends React.Component {
       width: '100%'
     }
     return (
-      <div style={{ ...style, ...this.props.svgContainerStyle }}>
+      <div style={{ ...style, ...this.props.style }}>
         <PirateShip />
       </div>
     )

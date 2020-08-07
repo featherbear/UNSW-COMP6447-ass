@@ -27,47 +27,13 @@ export default class extends React.Component {
         userSelect: 'none'
       }
     }
-
-    // this.handleScroll = this.handleScroll.bind(this)
   }
-
-  // componentDidMount () {
-  //   window.addEventListener('scroll', this.handleScroll)
-  // }
-
-  // componentWillUnmount () {
-  //   window.removeEventListener('scroll', this.handleScroll)
-  // }
-
-  // handleScroll (event) {
-  //   const scrollTop = window.scrollY
-  //   const logoHeight = Math.max(this.minHeight, this.initialHeight - scrollTop)
-  //   const textOffset = Math.min(this.initialHeight, scrollTop)
-
-  //   this.setState({
-  //     svgContainerStyle: {
-  //       ...this.state.svgContainerStyle
-  //       //  translateY(-${textOffset}px)`
-  //     },
-  //     textStyle: {
-  //       ...this.state.textStyle
-  //       // transform: `translateY(-${textOffset}px)`
-  //     },
-  //     shipStyle: {
-  //       ...this.state.shipStyle
-  //       // transform: `scale(${logoHeight / this.initialHeight})`
-  //     },
-  //     containerStyle: {
-  //       ...this.state.containerStyle
-  //     }
-  //   })
-  // }
 
   render () {
     return (
       <CoverPage>
         <FlexRow style={this.state.containerStyle}>
-          <ShipContainer svgContainerStyle={this.state.shipStyle} />
+          <ShipContainer style={this.state.shipStyle} />
           <TitleFuzz style={this.state.textStyle} />
         </FlexRow>
       </CoverPage>

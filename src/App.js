@@ -86,22 +86,22 @@ export default class App extends React.Component {
             <HeadingCover />
           </div>
         </div>
+        <div className='nav-bar-container'>
+          <div className='nav-bar no-select' ref={this.navRef}>
+            {this.renderNavBtn('Home', 'home')}
+            {this.renderNavBtn('Crew', 'crew')}
+          </div>
+        </div>
         <div className='container'>
-          <div className='nav-bar-container'>
-            <div className='nav-bar no-select' ref={this.navRef}>
-              {this.renderNavBtn('Home', 'home')}
-              {this.renderNavBtn('Crew', 'crew')}
-            </div>
 
-            {/*
+          {/*
                 Perfect SCSS candidate here. @captain
                 (Andrew, best mate, 20, less confused here)
             */}
-            <CoverPage style={{ height: 'calc(100vh - 64px)' }}>
-              {this.state.currentPage}
-            </CoverPage>
-            <FixedShip />
-          </div>
+          <CoverPage style={{ height: 'calc(100vh - 64px)' }}>
+            {this.state.currentPage}
+          </CoverPage>
+          <FixedShip />
         </div>
       </div>
     )
