@@ -69,12 +69,12 @@ export default class App extends React.Component {
 
       // "Stop it Andrew, you're scaring them"
     */
-    const hashPage = () => this.handlePageChange((window.location.hash.substr(1) || 'home').toLowerCase());
+    const hashPage = () => this.handlePageChange((window.location.hash.substr(1) || 'home').toLowerCase()) && false;
     (window.onhashchange = hashPage)()
   }
 
   renderNavBtn (display, handler) {
-    return <h2 className={this.state.page === handler ? 'active-page' : ''} onClick={() => this.handlePageChange(handler)}>{display}</h2>
+    return <h2 className={this.state.page === handler ? 'active-page' : ''} onClick={() => (window.location.hash = handler)}>{display}</h2>
   }
 
   render () {
