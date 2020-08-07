@@ -2,9 +2,15 @@ import React from 'react'
 import anime from 'animejs'
 
 export default class App extends React.Component {
+  constructor (props) {
+    super(props)
+    this.waveRef = React.createRef()
+    this.shipRef = React.createRef()
+  }
+
   componentDidMount () {
     anime({
-      targets: 'svg #Waves path',
+      targets: this.waveRef.current,
       d: `M0,499.7c94.74,75.65,185.15,40.55,221.52-12.52c6.81,18.42,36.91,45.39,97.17,38.73
                 c36.78-3.71,58.61-14.49,93.26-49.55c13.59,16.24,63.09,15.35,84.26,15.25c50.21-0.25,83.77-11.73,116.42-49.88
                 c11.61,14.7,99.71,6.31,107.37-8.16`,
@@ -15,7 +21,7 @@ export default class App extends React.Component {
     })
     let o
     anime({
-      targets: 'svg #Ship',
+      targets: this.shipRef.current,
       // Andrew, why.
       keyframes: (i => [(o = i => ({ rotate: i, translateX: -i }))(i), o(-i)])(1),
       duration: 8000,
@@ -56,6 +62,7 @@ export default class App extends React.Component {
         <g id='Waves'>
           <path
             style={style.st1}
+            ref={this.waveRef}
             className='st1'
             d='M0,539.22c58.92,25.81,134.75,16.93,171.12-36.14c6.81,18.42,30.54,23.31,50.16,22.42
                 c49.24-2.24,97.36-23.63,132.01-58.69c13.59,16.24,36.62,21.01,57.79,20.91c50.21-0.25,99.86-23.26,132.51-61.41
@@ -63,7 +70,7 @@ export default class App extends React.Component {
           />
         </g>
 
-        <g id='Ship' style={style.ship}>
+        <g id='Ship' style={style.ship} ref={this.shipRef}>
           <path
             className='st2'
             style={style.st2}
