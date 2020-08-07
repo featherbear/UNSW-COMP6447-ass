@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import HeadingCover from './components/cover'
+import HeadingCover from './components/home/HeadingCover'
 import CoverPage from './components/utils/CoverPage'
+import FixedShip from './components/home/FixedElement'
 
 import Home from './pages/Home'
 import Crew from './pages/Crew'
@@ -79,23 +80,29 @@ export default class App extends React.Component {
 
   render () {
     return (
-      <div className='container'>
-        <HeadingCover />
-        <div className='content'>
-          <div className='nav-bar' ref={this.navRef}>
-            {this.renderNavBtn('Home', 'home')}
-            {this.renderNavBtn('Crew', 'crew')}
+      <div>
+        <div style={{ background: 'white' }}>
+          <div className='container'>
+            <HeadingCover />
           </div>
-
-          {/*
-          Perfect SCSS candidate here. @captain
-          (Andrew, best mate, 20, less confused here)
-          */}
-          <CoverPage style={{ height: 'calc(100vh - 64px)' }}>
-            {this.state.currentPage}
-          </CoverPage>
         </div>
+        <div className='container'>
+          <div className='nav-bar-container'>
+            <div className='nav-bar no-select' ref={this.navRef}>
+              {this.renderNavBtn('Home', 'home')}
+              {this.renderNavBtn('Crew', 'crew')}
+            </div>
 
+            {/*
+                Perfect SCSS candidate here. @captain
+                (Andrew, best mate, 20, less confused here)
+            */}
+            <CoverPage style={{ height: 'calc(100vh - 64px)' }}>
+              {this.state.currentPage}
+            </CoverPage>
+            <FixedShip />
+          </div>
+        </div>
       </div>
     )
   }

@@ -1,7 +1,12 @@
 @import '~bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Heebo&display=swap');
+
 @import 'main';
+
+@import '_util';
+
 @import 'page';
 @import 'navigation';
 @import 'profile';
+
 @import '_andrewsMutiny';
