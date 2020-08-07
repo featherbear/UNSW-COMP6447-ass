@@ -1,5 +1,4 @@
 import React from 'react'
-import FlexRow from '../utils/FlexRow'
 import Icon from '../utils/Icon'
 
 export default function (title, iconSrc, description) {

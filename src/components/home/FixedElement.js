@@ -1,5 +1,4 @@
 import React from 'react'
-import PirateShip from './PirateShip'
 import Fixed from '../utils/Fixed'
 import ShipContainer from './ShipContainer'
 
