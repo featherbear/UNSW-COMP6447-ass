@@ -25,8 +25,6 @@ export default class extends React.Component {
       },
       containerStyle: {
         userSelect: 'none'
-        // backgroundColor: 'rgba(0, 255, 255, 0.6)'
-
       }
     }
 
@@ -52,16 +50,15 @@ export default class extends React.Component {
   //       //  translateY(-${textOffset}px)`
   //     },
   //     textStyle: {
-  //       ...this.state.textStyle,
-  //       transform: `translateY(-${textOffset}px)`
+  //       ...this.state.textStyle
+  //       // transform: `translateY(-${textOffset}px)`
   //     },
   //     shipStyle: {
-  //       ...this.state.shipStyle,
-  //       transform: `scale(${logoHeight / this.initialHeight})`
+  //       ...this.state.shipStyle
+  //       // transform: `scale(${logoHeight / this.initialHeight})`
   //     },
   //     containerStyle: {
   //       ...this.state.containerStyle
-
   //     }
   //   })
   // }

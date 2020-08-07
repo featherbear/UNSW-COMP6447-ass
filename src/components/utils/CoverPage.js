@@ -12,7 +12,7 @@ export default class extends React.Component {
       }
     }
     return (
-      <div style={styles.container}>
+      <div style={{ ...this.props.style, ...styles.container }}>
         {this.props.children}
       </div>
     )
