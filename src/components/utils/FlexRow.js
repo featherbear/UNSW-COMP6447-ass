@@ -8,7 +8,8 @@ export default class extends React.Component {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        maxWidth: '100%'
       }
     }
     return (

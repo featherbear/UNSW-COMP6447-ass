@@ -26,7 +26,9 @@ function generateNewString (text) {
 }
 
 const style = {
-  minWidth: '300px'
+  minWidth: '300px',
+  textAlign: 'center',
+  fontFamily: 'monospace'
 }
 
 export default function (props) {
@@ -35,7 +37,7 @@ export default function (props) {
   useEffect(() => {
     const interval = setInterval(() => {
       updateText(generateNewString(text))
-    }, 250)
+    }, 75)
 
     return () => clearInterval(interval)
   })
