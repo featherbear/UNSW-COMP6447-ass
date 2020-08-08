@@ -70,7 +70,7 @@ Dedicated to Adam Banana`
         </p>
         <p>
           Visually appealing progress bars (if you run the fuzzer without a
-          progress bar you don't get to see progress 😥)
+          progress bar you don't get to see progress <span role='img' aria-label='sad face'>😥</span>)
           <Code>python3 -m securitears [program-name] -v</Code>
         </p>
         <p>
