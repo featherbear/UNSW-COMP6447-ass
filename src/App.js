@@ -8,6 +8,8 @@ import FixedShip from './components/home/FixedElement'
 import Home from './pages/Home'
 import Crew from './pages/Crew'
 
+const defaultPage = 'home'
+
 export default class App extends React.Component {
   constructor (props) {
     super(props)
@@ -28,12 +30,11 @@ export default class App extends React.Component {
     this.scrollToContent = this.scrollToContent.bind(this)
   }
 
-  handlePageChange (page) {
+  handlePageChange (page, noScroll) {
     if (this.state.page !== page) {
-      if (page === '') {
+      if (page === null) {
         this.setState({
-          page,
-          currentPage: null
+          page
         })
 
         ReactDOM.findDOMNode(this.homeRef.current).scrollIntoView()
@@ -59,9 +60,7 @@ export default class App extends React.Component {
         })()
         if (newElement === null) {
           // Default page
-          window.location.hash = 'home'
-          return
-          // return this.handlePageChange('home')
+          return this.handlePageChange(defaultPage)
         }
         this.setState({
           page,
@@ -70,14 +69,13 @@ export default class App extends React.Component {
         })
       }
 
-      this.scrollToContent()
+      if (!noScroll) {
+        this.scrollToContent()
+      }
     }
   }
 
   scrollToContent () {
-    if (this.state.page === '') {
-      return this.handlePageChange(null)
-    }
     ReactDOM.findDOMNode(this.navRef.current).scrollIntoView()
   }
 
@@ -94,7 +92,8 @@ export default class App extends React.Component {
 
       // "Stop it Andrew, you're scaring them"
     */
-    const hashPage = () => this.handlePageChange((window.location.hash.substr(1) || '').toLowerCase()) && false;
+    const hashPage = () => this.handlePageChange(window.location.hash.substr(1).toLowerCase() || null) && false
+    this.handlePageChange(window.location.hash.substr(1).toLowerCase() || defaultPage, true);
     (window.onhashchange = hashPage)()
   }
 
