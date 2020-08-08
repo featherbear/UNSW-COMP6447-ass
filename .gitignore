@@ -1,0 +1,7 @@
+.vscode/
+__pycache__/
+*.pyc
+.gdb_history
+
+/bad.txt
+*.bad.txt
