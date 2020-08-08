@@ -5,12 +5,14 @@ export default function (title, iconSrc, description) {
   const style = {
     row: {
       height: '100px',
-      display: 'flex'
+      display: 'flex',
+      marginBottom: '20px'
     },
     description: {
       marginLeft: '20px',
       height: '100px',
-      width: '100%'
+      width: '100%',
+      whiteSpace: 'pre'
     },
     img: {
       width: '100px'

@@ -36,7 +36,7 @@ export default class extends React.Component {
       bottom: 0,
       right: 0,
       width: '60vw',
-      opacity: 0.3,
+      opacity: 0.1,
       zIndex: -1,
       transform: 'translateY(3%) rotate(-8deg)'
     }

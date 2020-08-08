@@ -7,6 +7,7 @@ import FixedShip from './components/home/FixedElement'
 
 import Home from './pages/Home'
 import Crew from './pages/Crew'
+import Usage from './pages/Usage'
 
 const defaultPage = 'home'
 
@@ -54,6 +55,7 @@ export default class App extends React.Component {
           switch (page) {
             case 'home': return <Home />
             case 'crew': return <Crew />
+            case 'usage': return <Usage />
             default:
               return null
           }
@@ -105,24 +107,33 @@ export default class App extends React.Component {
     return (
       <div>
         <div style={{ background: 'white' }} ref={this.homeRef}>
-          <div className='container'>
+          <div className='container width80'>
             <HeadingCover handleBtnAction={this.scrollToContent} />
           </div>
         </div>
         <div>
           <div className='nav-bar-container'>
-            <div className='nav-bar no-select' ref={this.navRef}>
+            <div className='nav-bar width80 no-select' ref={this.navRef}>
               {this.renderNavBtn('Home', 'home')}
+              {this.renderNavBtn('Usage', 'usage')}
               {this.renderNavBtn('Crew', 'crew')}
             </div>
           </div>
-          <div className='container'>
+          <div className='container width80'>
             {/*
                 Perfect SCSS candidate here. @captain
                 (Andrew, best mate, 20, less confused here)
+
+                <CoverPage style={{ height: 'calc(100vh - 64px)', flexDirection: 'column' }}>
             */}
-            <CoverPage style={{ height: 'calc(100vh - 64px)' }}>
+
+            <CoverPage style={{ height: '100%', minHeight: '100vh', justifyContent: 'start', flexDirection: 'column' }}>
               {this.state.currentPage}
+
+              <footer>
+                <hr />
+                <i>Let's sail the seven seas and pillage the binaries of their precious memory corruptions! <img style={{ height: '1em' }} src='https://github.githubassets.com/images/icons/emoji/unicode/1f3f4-2620.png' alt='pirate flag' /></i>
+              </footer>
             </CoverPage>
             <FixedShip />
           </div>

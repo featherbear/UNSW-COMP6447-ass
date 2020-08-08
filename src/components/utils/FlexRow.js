@@ -9,11 +9,12 @@ export default class extends React.Component {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        maxWidth: '100%'
+        maxWidth: '100%',
+        margin: '0 auto'
       }
     }
     return (
-      <div className='flexRow' style={{ ...styles.container, ...this.props.style }}>
+      <div className={'flexRow ' + (this.props.class || '')} style={{ ...styles.container, ...this.props.style }}>
         {this.props.children}
       </div>
     )
