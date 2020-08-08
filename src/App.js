@@ -109,21 +109,23 @@ export default class App extends React.Component {
             <HeadingCover handleBtnAction={this.scrollToContent} />
           </div>
         </div>
-        <div className='container'>
+        <div>
           <div className='nav-bar-container'>
             <div className='nav-bar no-select' ref={this.navRef}>
               {this.renderNavBtn('Home', 'home')}
               {this.renderNavBtn('Crew', 'crew')}
             </div>
           </div>
-          {/*
+          <div className='container'>
+            {/*
                 Perfect SCSS candidate here. @captain
                 (Andrew, best mate, 20, less confused here)
             */}
-          <CoverPage style={{ height: 'calc(100vh - 64px)' }}>
-            {this.state.currentPage}
-          </CoverPage>
-          <FixedShip />
+            <CoverPage style={{ height: 'calc(100vh - 64px)' }}>
+              {this.state.currentPage}
+            </CoverPage>
+            <FixedShip />
+          </div>
         </div>
       </div>
     )
