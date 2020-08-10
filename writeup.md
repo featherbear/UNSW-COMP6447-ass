@@ -22,11 +22,23 @@ The Harness class implements the logic related to executing the binary and pipin
 
 Runtime visualisations provide a breakdown of each strategy, its iteration status and success for a particular binary. Successful strategies are highlighted for further analysis. A summary of results is also provided when the `runTest.py` script is used.
 
-**Bugs which can be found**
+## Bugs which can be found
 
-Current strategies focus on causing segfaults by exploiting buffer overflows. Memory corruptions are also attempted by providing illegitimate values to the program, for example, a negative value for a length input.
+Common strategies focus on causing segfaults by exploiting buffer overflows. This is done by either duplicating or padding the given input.
 
-**Future Improvements**
+Memory corruptions are also attempted by providing illegitimate values to the program, such as emojis, non-ascii characters and negative lengths.
+
+
+### CSV
+
+### JSON
+
+
+### Plain
+
+### XML
+
+## Future Improvements
 
 The fuzzer is capable of breaking programs, however, it is currently not capable of identifying the minimum condition for causing that breakage. We could implement dynamic strategies which respond to errors raised by the program and mutate themselves in order to find similar faults within the program.
 
