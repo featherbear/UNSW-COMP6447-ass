@@ -30,9 +30,8 @@ Runtime visualisations provide a breakdown of each strategy, its iteration statu
 Common strategies focus on causing segfaults by exploiting buffer overflows. In general, this is done by either duplicating or padding the valid input, or yielding strings of large lengths. Memory corruptions are also attempted by providing illegitimate values to the program, such as non-ascii characters and negative lengths.
 
 ### CSV
-Apart from relacing CSV entries with **GARBAGE**, CSV files are fuzzed by adding a dash to the front of each entry in the hopes of turning the number into its negative counterpart.
+CSV files are fuzzed by adding a dash to the front of each entry in the hopes of turning the number into its negative counterpart. Afterwards, an integer within the CSV is replaced by an integer from the int_strategy function. The int_strategy returns powers of two. Both strategies have a permutation option.
 
-CSV entries are 
 ### JSON
 Similar to the common strategies, JSON files are fuzzed by providing inputs of large lengths, characters and object types. Such object types include array objects, boolean and null values. Another strategy inverts the sign of the integers and floats found in the given input.
 
