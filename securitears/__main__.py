@@ -43,6 +43,8 @@ with bootstrap(args.program, inputFile=args.input) as w:
     fuzzString = w.fuzz(limit=args.limit, wait=args.wait, strategyName=args.strategy)
     if fuzzString is not None:
         print("\nFound a payload!")
+        print("\nInvalid input:")
+        print(fuzzString)
         if args.dest:
             args.dest.write(strToBytes(fuzzString))
     else:
