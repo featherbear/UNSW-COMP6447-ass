@@ -10,10 +10,10 @@
 
 ## Alter-egos
 
-* Eunike Utojo 
-* Andrew Wong 
-* Oscar Cheung 
-* Roger Tong 
+* Eunike Utojo ()
+* Andrew Wong ()
+* Oscar Cheung ()
+* Roger Tong ()
 * Theon Ho 
 
 ## Installation
