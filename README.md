@@ -22,8 +22,17 @@ Install the Python libraries with:
 ```
 python3 -m pip install -r requirements.txt
 ```
+OR
+```
+./install.sh
+```
 
 ## How do you use this thing?
+
+Run the fuzzer under spec conditions with (fuzzer works on the program with unlimited executions or until time limit reached):
+```
+./fuzzer [program-name] [input-file]
+```
 
 Run all the tests with all strategies with:
 ```
