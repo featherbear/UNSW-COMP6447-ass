@@ -5,6 +5,6 @@ if len(sys.argv) - 1 != 2:
     print(f"Usage: {sys.argv[0]} [program] [input]")
     exit(0)
 
-sys.argv = [sys.argv[0], sys.argv[1], "-i", sys.argv[2], "-d", "bad.txt", "-v"]
+sys.argv = [sys.argv[0], sys.argv[1], "-i", sys.argv[2], "-d", "bad.txt", "-v", "-l", "0"]
 
 from securitears import __main__
