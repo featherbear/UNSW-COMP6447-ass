@@ -10,6 +10,7 @@ export default class extends React.Component {
         justifyContent: 'center',
         flexDirection: 'row',
         maxWidth: '100%',
+        width: '100%',
         margin: '0 auto'
       }
     }
